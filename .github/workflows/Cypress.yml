@@ -1,4 +1,4 @@
-ame: Cypress Allure Tests and GitHub Pages Deployment
+Name: Cypress Allure Tests and GitHub Pages Deployment
 
 on:
   push:
