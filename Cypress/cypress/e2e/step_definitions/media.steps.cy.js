@@ -1,5 +1,5 @@
 import { Given, Then } from '@badeball/cypress-cucumber-preprocessor';
-import { getMediaAPI } from '../../support/api'; // Adjust the path as necessary
+import "cypress-real-events";
 let response;
 
 Given("I send a GET request to the media API", () => {
