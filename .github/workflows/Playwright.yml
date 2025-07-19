@@ -21,12 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./BBC_Takehome_Test
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-        working-directory: ./BBC_Takehome_Test
 
       - name: Run Playwright Cucumber tests
         run: npx cucumber-js --format progress
-        working-directory: ./BBC_Takehome_Test
