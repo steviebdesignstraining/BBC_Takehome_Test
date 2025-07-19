@@ -5,20 +5,20 @@ on: push
 jobs:
   automated-api-tests:
     runs-on: ubuntu-latest
+    environment: Postman  # ✅ Make sure this matches the environment name where the secret is stored
     steps:
       - uses: actions/checkout@v4
 
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-          echo "$HOME/.postman" >> $GITHUB_PATH  # Ensure postman is in PATH
+          echo "$HOME/.postman" >> $GITHUB_PATH
 
-      - name: Verify Postman CLI is installed
+      - name: Verify Postman CLI
         run: postman --version
 
       - name: Login to Postman CLI
-        run: |
-          postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
       - name: Run API tests
         run: |
