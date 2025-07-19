@@ -10,33 +10,26 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Install dependencies
+        working-directory: ./Cypress
         run: npm install
 
-
-      - name: Verify Cypress installation
-        run: npx cypress verify
-
-      - name: Run Cypress Tests with Cucumber and generate Allure results
+      - name: Run Cypress Tests with Allure
+        working-directory: ./Cypress
         run: npm run test:allure
 
-      - name: Upload Allure results
+      - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: allure-report
-
+          path: ./Cypress/allure-report
