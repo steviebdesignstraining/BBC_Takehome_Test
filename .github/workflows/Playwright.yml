@@ -14,16 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./BBC_Takehome_Test
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
+        working-directory: ./BBC_Takehome_Test
 
       - name: Run Playwright Cucumber tests
         run: npx cucumber-js --format progress
+        working-directory: ./BBC_Takehome_Test
