@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","263","Validate total number of media items","","Sat Jul 19 23:41:18 BST 2025","failed","Sat Jul 19 23:41:18 BST 2025","","Media API Testing","",""
+"","286","More than one now_playing should fail","","Sat Jul 19 23:41:19 BST 2025","failed","Sat Jul 19 23:41:19 BST 2025","","Media API Testing","",""
+"","363","Validate data in media list","","Sat Jul 19 23:41:17 BST 2025","failed","Sat Jul 19 23:41:18 BST 2025","","Media API Testing","",""
+"","278","Invalid endpoint returns 404","","Sat Jul 19 23:41:18 BST 2025","failed","Sat Jul 19 23:41:19 BST 2025","","Media API Testing","",""
+"","291","Validate response headers","","Sat Jul 19 23:41:18 BST 2025","failed","Sat Jul 19 23:41:18 BST 2025","","Media API Testing","",""
+"","713","Validate response code and timing","","Sat Jul 19 23:41:17 BST 2025","failed","Sat Jul 19 23:41:17 BST 2025","","Media API Testing","",""

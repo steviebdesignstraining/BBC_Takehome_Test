@@ -1,17 +1,13 @@
 // cypress.config.js
 
-// Change import statements to require statements
 const { defineConfig } = require("cypress");
 const addCucumberPreprocessorPlugin =
   require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
 const createEsbuildPlugin =
   require("@badeball/cypress-cucumber-preprocessor/esbuild").createEsbuildPlugin;
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
-// This file is treated as a CommonJS Module.
-// Cypress automatically loads .env files from the project root.
-// Variables from .env are then available via process.env in Node.js context.
 
-// Change export default to module.exports
+const allureWriter = require("@shelex/cypress-allure-plugin/writer");
 module.exports = defineConfig({
   e2e: {
     async setupNodeEvents(
@@ -22,7 +18,10 @@ module.exports = defineConfig({
         "file:preprocessor",
         createBundler({
           plugins: [createEsbuildPlugin(config)], // <-- CORRECT WAY TO USE createEsbuildPlugin
-        })      );
+        })      
+      );
+
+      allureWriter(on, config);
 
       // Optional: Log the resolved baseUrl and the raw environment variable for debugging.
       console.log('Cypress config.baseUrl (resolved):', config.baseUrl);
@@ -59,6 +58,8 @@ module.exports = defineConfig({
         omitFiltered: true,
         filterSpecs: true, // <-- FIXED: Added comma and moved comment
         // nonGlobalStepDefinitions: false, // Default is usually false, meaning steps are global
+        allureResultsPath: "allure-results",
+        allureResultsPath: "allure-results", // This is the default, but good to have
       },
     },
   },

@@ -7,7 +7,9 @@
   "scripts": {
     "cypress:runner": "cypress open",
     "cypress:execution": "cypress run",
-    "cypress:execution-tags": "cypress run --env tags=@mobile"
+    "cypress:execution-tags": "cypress run --env tags=@mobile",
+    "test:allure": "cypress run --env allure=true",
+    "posttest:allure": "allure generate --clean && allure open"
   },
   "keywords": [],
   "author": "",
