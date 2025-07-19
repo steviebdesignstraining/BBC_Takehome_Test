@@ -1,4 +1,4 @@
-name: Cypress Allure Tests and GitHub Pages Deployment
+ame: Cypress Allure Tests and GitHub Pages Deployment
 
 on:
   push:
@@ -50,7 +50,7 @@ jobs:
         if: always() # Ensure this step runs even if tests fail
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages # Name of the artifact to be uploaded for GitHub Pages
+          name: allure-report-artifact # Changed artifact name to avoid conflict
           path: ./Cypress/allure-report # Path to the generated HTML report
           retention-days: 1 # Keep the artifact for 1 day to save storage
 
@@ -71,7 +71,7 @@ jobs:
       - name: Download Allure HTML Report Artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages # Must match the name used in the upload step
+          name: allure-report-artifact # Must match the new name used in the upload step
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
