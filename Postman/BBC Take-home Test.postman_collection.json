@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "c00c902a-30f9-4085-96fc-6aed1d1c987c",
+		"name": "BBC Take-home Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4664080",
+		"_collection_link": "https://galactic-flare-656532.postman.co/workspace/Elsewhen~87dc64ed-85bb-4311-8a8b-14ca4f95a4d4/collection/4664080-c00c902a-30f9-4085-96fc-6aed1d1c987c?action=share&source=collection_link&creator=4664080"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;",
+							"",
+							"pm.test('Status code is 200 or 403', () => {",
+							"    pm.expect([200, 403, 404]).to.include(status); // include 404 for invalid path test",
+							"});",
+							"",
+							"if (status === 200) {",
+							"    pm.test('Content-Type is application/json', () => {",
+							"        pm.response.to.have.header('Content-Type');",
+							"        pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    });",
+							"}",
+							"",
+							"// 3. Validate Date header presence and format (always)",
+							"pm.test('Response header contains Date', () => {",
+							"    const dateHeader = pm.response.headers.get('Date');",
+							"    pm.expect(dateHeader).to.exist.and.not.empty;",
+							"});",
+							"pm.test('Date header is a valid date', () => {",
+							"    const dateHeader = pm.response.headers.get('Date');",
+							"    pm.expect(Date.parse(dateHeader)).to.be.a('number');",
+							"});",
+							"",
+							"// 4. Parse JSON safely",
+							"let jsonData;",
+							"try {",
+							"    jsonData = pm.response.json();",
+							"} catch (e) {",
+							"    if (status === 200) {",
+							"        pm.test('Response should be valid JSON', () => {",
+							"            throw new Error('Response is not valid JSON');",
+							"        });",
+							"    }",
+							"}",
+							"",
+							"// If JSON parsed and status 200, run detailed validations",
+							"if (status === 200 && jsonData) {",
+							"    ",
+							"    // 5. Verify API returns exactly 14 media items",
+							"    pm.test('Exactly 14 media items', () => {",
+							"        pm.expect(jsonData.data).to.have.lengthOf(14);",
+							"    });",
+							"",
+							"    // 6. Validate no duplicate IDs",
+							"    pm.test('No duplicate IDs in data', () => {",
+							"        const ids = jsonData.data.map(item => item.id);",
+							"        const unique = [...new Set(ids)];",
+							"        pm.expect(ids.length).to.eql(unique.length);",
+							"    });",
+							"",
+							"    pm.test('Each item has valid non-empty title_list.primary', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item).to.have.property('title_list');",
+							"            pm.expect(item.title_list).to.have.property('primary').that.is.a('string').and.not.empty;",
+							"        });",
+							"    });",
+							"",
+							"    pm.test('Each item has valid type', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item.type).to.eql('music_track');",
+							"        });",
+							"    });",
+							"",
+							"    pm.test('Item contains expected fields', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item).to.include.all.keys('id', 'type', 'title_list', 'offset', 'uris');",
+							"        });",
+							"    });",
+							"",
+							"    pm.test('Offset object has expected structure', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item.offset).to.have.all.keys('start', 'end', 'label', 'now_playing');",
+							"        });",
+							"    });",
+							"",
+							"    pm.test('Offset start/end are numbers', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item.offset.start).to.be.a('number');",
+							"            pm.expect(item.offset.end).to.be.a('number');",
+							"        });",
+							"    });",
+							"",
+							"    // 12. Check for null or empty id in all items",
+							"    pm.test('No null or empty IDs', () => {",
+							"        jsonData.data.forEach(item => {",
+							"            pm.expect(item.id).to.be.a('string').and.not.empty;",
+							"        });",
+							"    });",
+							"",
+							"    // 13. Validate response when now_playing is set for multiple items (should be exactly one)",
+							"    pm.test('Only one track has now_playing true', () => {",
+							"        let count = 0;",
+							"        jsonData.data.forEach(track => {",
+							"            if (track.offset && track.offset.now_playing === true) count++;",
+							"        });",
+							"        pm.expect(count).to.eql(1);",
+							"    });",
+							"",
+							"}",
+							"",
+							"pm.test('Invalid path returns 404', () => {",
+							"    if (pm.environment.get('test_case') === 'invalid') {",
+							"        pm.expect(status).to.eql(404);",
+							"    }",
+							"});",
+							"",
+							"pm.test('Unsupported query param test', () => {",
+							"    if (pm.environment.get('test_case') === 'unsupported_query') {",
+							"        pm.expect([200, 400]).to.include(status);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set path and test_case for different scenarios",
+							"const testCase = pm.environment.get('test_case') || 'valid';",
+							"",
+							"if (testCase === 'invalid') {",
+							"    pm.environment.set('path', '/mediaXYZ'); // invalid path",
+							"} else if (testCase === 'unsupported_query') {",
+							"    pm.environment.set('path', '/media?foo=bar'); // with unsupported query param",
+							"} else {",
+							"    pm.environment.set('path', '/media'); // valid path",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/media",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"media"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://testapi.io/api/ottplatform\n\n",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://testapi.io/api/ottplatform"
+		}
+	]
+}
