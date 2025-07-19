@@ -55,7 +55,8 @@ jobs:
           retention-days: 1 # Keep the artifact for 1 day to save storage
 
   deploy:
-    needs: test # This job depends on the 'test' job completing successfully
+    needs: test # This job depends on the 'test' job completing
+    if: always() # This ensures the deploy job runs even if the 'test' job fails
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
