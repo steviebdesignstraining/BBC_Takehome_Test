@@ -44,17 +44,17 @@ Getting these frameworks up and running is straightforward. Please ensure you ar
 1.  **Clone the repository**:
 
     ```bash
-    git clone http://waracle-1-xqmgza@git.codesubmit.io/waracle-1/qa-hiring-iliptv
+    [git clone https://github.com/steviebdesignstraining/BBC_Takehome_Test.git]
     ```
 
 2.  **Navigate to the framework directory**:
 
     ```bash | Cypress
-    cd qa-hiring-iliptv/cypress
+    cd BBC_Takehome_Test/Cypress
     ```
 
     ```bash | Playwright
-    cd qa-hiring-iliptv/playwright
+    cd BBC_Takehome_Test/Postman
     ```
 
 3.  **Install dependencies**:
@@ -67,15 +67,20 @@ Getting these frameworks up and running is straightforward. Please ensure you ar
 
 Choose your preferred framework and execution method:
 
-| Command                   | Description                                             |
-| :------------------------ | :------------------------------------------------------ |
-| `npx playwright test --ui` | **Open Playwright GUI** for interactive debugging.      |
-| `npm run cypress:open`    | **Open Cypress GUI** for interactive test development.  |
-| `npx playwright test`     | **Run Playwright** tests in headless mode.              |
-| `npm run test`            | **Run Cypress** tests in headless mode.                 |
-| `allure serve allure-results` | **Generate & Serve Allure Report** (for Playwright). |
+| Command                             | Description                                             |
+| :------------------------           | :------------------------------------------------------ |
+| `npx cucumber-js --format progress` |             **RUn Playwright in termindal**             |
+| `npm run cypress:runner`            | **Open Cypress GUI** for interactive test development.  |
+| `npm run cypress:execution`         |        **Run Cypress** tests in headless mode.          |
+| `npm run test:allure`               |  **Generate & Serve Allure Report** (for Playwrigh t).  |
 
 -----
+
+### CI/CD Pipeline and Report Dashboard
+```To access the CI/CD pipeline and to review the allure report via GHP please click on the below link
+https://steviebdesignstraining.github.io/BBC_Takehome_Test/#suites/37c1faf7af4bb8d0a97790b686f31a64/38a8ae7463f2226/
+https://github.com/steviebdesignstraining/BBC_Takehome_Test/actions
+```
 
 ## ✨ Features & Best Practices
 
