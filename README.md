@@ -77,11 +77,13 @@ Choose your preferred framework and execution method:
 -----
 
 ### CI/CD Pipeline and Report Dashboard
-```To access the CI/CD pipeline and to review the allure report via GHP please click on the below link
+``` Review allure report via GHP
 https://steviebdesignstraining.github.io/BBC_Takehome_Test/#suites/37c1faf7af4bb8d0a97790b686f31a64/38a8ae7463f2226/
 ```
-```https://github.com/steviebdesignstraining/BBC_Takehome_Test/actions
+``` To access the CI/CD pipeline
+https://github.com/steviebdesignstraining/BBC_Takehome_Test/actions
 ```
+
 
 ## ✨ Features & Best Practices
 
